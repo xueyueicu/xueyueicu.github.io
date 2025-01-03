@@ -78,6 +78,12 @@
         button:hover {
             background-color: #0056b3;
         }
+        button.stop {
+            background-color: #dc3545;
+        }
+        button.stop:hover {
+            background-color: #c82333;
+        }
         .message {
             margin: 10px 0;
             padding: 10px;
@@ -212,7 +218,8 @@
             <div class="input-container">
                 <textarea id="userInput" placeholder="请输入您的消息..." rows="3"></textarea>
                 <div class="button-container">
-                    <button onclick="sendMessage()">发送</button>
+                    <button onclick="sendMessage()" id="sendButton">发送</button>
+                    <button onclick="stopOutput()" id="stopButton" class="stop" style="display: none;">停止输出</button>
                     <button onclick="saveChat()">保存聊天记录</button>
                 </div>
             </div>
@@ -221,6 +228,7 @@
 
     <script>
         let messages = [];
+        let currentController = null;
         const md = window.markdownit({
             breaks: true,  // 启用换行符转换
             linkify: true, // 将URL转换为链接
@@ -273,6 +281,15 @@
                 }
             } catch (error) {
                 console.error('获取模型列表出错:', error);
+            }
+        }
+
+        function stopOutput() {
+            if (currentController) {
+                currentController.abort();
+                currentController = null;
+                document.getElementById('stopButton').style.display = 'none';
+                document.getElementById('sendButton').style.display = 'block';
             }
         }
 
@@ -337,6 +354,14 @@
             chatContainer.appendChild(aiMessage);
 
             if (streamOutput) {
+                // 显示停止按钮，隐藏发送按钮
+                document.getElementById('stopButton').style.display = 'block';
+                document.getElementById('sendButton').style.display = 'none';
+
+                // 创建新的 AbortController
+                currentController = new AbortController();
+                const signal = currentController.signal;
+
                 // 流式输出
                 fetch(endpoint, {
                     method: 'POST',
@@ -350,7 +375,8 @@
                         max_tokens: maxTokens,
                         temperature: temperature,
                         stream: true
-                    })
+                    }),
+                    signal: signal
                 }).then(response => {
                     const reader = response.body.getReader();
                     let accumulatedResponse = '';
@@ -362,6 +388,9 @@
                                     role: 'assistant',
                                     content: accumulatedResponse
                                 });
+                                // 恢复按钮状态
+                                document.getElementById('stopButton').style.display = 'none';
+                                document.getElementById('sendButton').style.display = 'block';
                                 return;
                             }
 
@@ -396,8 +425,15 @@
 
                     return readStream();
                 }).catch(error => {
-                    console.error('Error:', error);
-                    alert('发送消息失败，请检查您的设置和网络连接');
+                    if (error.name === 'AbortError') {
+                        console.log('Stream aborted');
+                    } else {
+                        console.error('Error:', error);
+                        alert('发送消息失败，请检查您的设置和网络连接');
+                    }
+                    // 恢复按钮状态
+                    document.getElementById('stopButton').style.display = 'none';
+                    document.getElementById('sendButton').style.display = 'block';
                 });
             } else {
                 // 非流式输出

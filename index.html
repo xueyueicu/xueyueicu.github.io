@@ -274,6 +274,9 @@
                         const option = document.createElement('option');
                         option.value = model.id;
                         option.textContent = model.id;
+                        if (model.id === 'gpt-4o-mini') {
+                            option.selected = true;
+                        }
                         modelSelect.appendChild(option);
                     });
                 } else {

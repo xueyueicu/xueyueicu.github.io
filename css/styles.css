@@ -1,0 +1,305 @@
+/* 
+   通用样式文件 - 蓝白主题
+   包含网站通用的变量和组件样式
+*/
+
+:root {
+    --primary-blue: #0d3b66;
+    --secondary-blue: #6c8eb3;
+    --light-blue: #e6f2ff;
+    --accent-blue: #1e88e5;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--light-blue);
+    color: var(--primary-blue);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* 按钮样式 */
+.btn {
+    padding: 0.8rem 2rem;
+    background: linear-gradient(to right, var(--primary-blue), var(--accent-blue));
+    color: var(--white);
+    border: none;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(30, 136, 229, 0.2);
+    text-decoration: none;
+    display: inline-block;
+    z-index: 1;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(30, 136, 229, 0.3);
+}
+
+/* 导航栏 */
+nav {
+    background-color: var(--white);
+    box-shadow: 0 2px 10px rgba(108, 142, 179, 0.1);
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--primary-blue);
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--secondary-blue);
+    font-weight: 500;
+    position: relative;
+}
+
+/* 悬浮动效 */
+.nav-links a:hover {
+    color: var(--primary-blue);
+    transform: translateY(-2px);
+}
+
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--primary-blue), var(--accent-blue));
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* 暗黑模式切换 */
+.theme-toggle {
+    background: none;
+    border: none;
+    color: var(--secondary-blue);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.theme-toggle:hover {
+    color: var(--primary-blue);
+}
+
+/* 波浪分割线 */
+.wave-divider {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    margin-top: -100px;
+}
+
+.wave-divider svg {
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 100px;
+    fill: var(--white);
+}
+
+/* 内容区 */
+.content-section {
+    background-color: var(--white);
+    padding: 4rem 5%;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.section-title h2 {
+    font-size: 2.5rem;
+    color: var(--primary-blue);
+    margin-bottom: 1rem;
+}
+
+.section-title::after {
+    content: "";
+    position: absolute;
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary-blue), var(--accent-blue));
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* 页脚 */
+footer {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    padding: 3rem 5%;
+    text-align: center;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.social-icons a {
+    color: var(--white);
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.social-icons a:hover {
+    transform: translateY(-5px) scale(1.1);
+    color: var(--light-blue);
+}
+
+/* 卡片 - 渐变玻璃效果 */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    padding: 2rem;
+    position: relative;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, var(--primary-blue), var(--accent-blue));
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    color: var(--accent-blue);
+    margin-bottom: 1.5rem;
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    color: var(--primary-blue);
+    margin-bottom: 1rem;
+}
+
+.card p {
+    color: var(--secondary-blue);
+    font-size: 1rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+    
+    .mobile-menu {
+        display: block;
+        font-size: 1.5rem;
+        color: var(--secondary-blue);
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+}
+
+/* 粒子背景 */
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* 暗黑模式 */
+body.dark-mode {
+    background-color: #0a192f;
+    color: #e6f1ff;
+}
+
+body.dark-mode nav {
+    background-color: #112240;
+    box-shadow: 0 2px 10px rgba(2, 12, 27, 0.5);
+}
+
+body.dark-mode .logo {
+    color: #e6f1ff;
+}
+
+body.dark-mode .nav-links a {
+    color: #8892b0;
+}
+
+body.dark-mode .nav-links a:hover {
+    color: #64ffda;
+}
+
+body.dark-mode .content-section {
+    background-color: #112240;
+}
+
+body.dark-mode .section-title h2 {
+    color: #e6f1ff;
+}
+
+body.dark-mode .card {
+    background: rgba(17, 34, 64, 0.7);
+    border: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+body.dark-mode .card h3 {
+    color: #e6f1ff;
+}
+
+body.dark-mode .card p {
+    color: #8892b0;
+}
+
+body.dark-mode .wave-divider svg {
+    fill: #112240;
+} 

@@ -3,515 +3,681 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI聊天室</title>
-    <!-- 添加 markdown-it 库和 KaTeX 支持 -->
-    <script src="https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/markdown-it-texmath@1.0.0/texmath.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <title>个人网站 - 蓝白主题</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/custom-cursor.css">
     <style>
-        body {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            font-family: Arial, sans-serif;
+        :root {
+            --primary-blue: #0d3b66;
+            --secondary-blue: #6c8eb3;
+            --light-blue: #e6f2ff;
+            --accent-blue: #1e88e5;
+            --white: #ffffff;
         }
-        .container {
-            display: flex;
-            gap: 20px;
-        }
-        .settings {
-            width: 25%;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            height: fit-content;
-        }
-        .settings div {
-            margin-bottom: 10px;
-            width: 100%;
-        }
-        .settings label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .settings input,
-        .settings select,
-        .settings textarea {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+        
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
+            transition: all 0.3s ease;
         }
-        .chat-section {
-            width: 75%;
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--light-blue);
+            color: var(--primary-blue);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
-        .chat-container {
-            height: 600px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            overflow-y: auto;
+        
+        /* 粒子背景 */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
-        .input-container {
-            margin-top: 20px;
+        
+        /* 导航栏 */
+        nav {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(108, 142, 179, 0.1);
+            padding: 1rem 5%;
             display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        textarea {
-            flex-grow: 1;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            min-width: 200px;
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-blue);
         }
-        button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--secondary-blue);
+            font-weight: 500;
+            position: relative;
+        }
+        
+        /* 悬浮动效 */
+        .nav-links a:hover {
+            color: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+        
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary-blue), var(--accent-blue));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* 暗黑模式切换 */
+        .theme-toggle {
+            background: none;
             border: none;
-            border-radius: 5px;
+            color: var(--secondary-blue);
+            font-size: 1.2rem;
             cursor: pointer;
         }
-        button:hover {
-            background-color: #0056b3;
+        
+        .theme-toggle:hover {
+            color: var(--primary-blue);
         }
-        button.stop {
-            background-color: #dc3545;
-        }
-        button.stop:hover {
-            background-color: #c82333;
-        }
-        .message {
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .user-message {
-            background-color: #e9ecef;
-            white-space: pre-wrap;
-        }
-        .ai-message {
-            background-color: #f8f9fa;
-        }
-        .button-container {
+        
+        /* 英雄区 */
+        .hero {
+            height: 90vh;
             display: flex;
-            gap: 10px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 5%;
+            position: relative;
+            overflow: hidden;
         }
-        /* Markdown 样式 */
-        .markdown-body {
-            font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;
-            line-height: 1.6;
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            z-index: 1;
         }
-        .markdown-body p {
-            margin: 1em 0;
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--secondary-blue);
+            max-width: 700px;
+            margin-bottom: 2rem;
+            z-index: 1;
         }
-        .markdown-body pre {
-            background-color: #f6f8fa;
-            padding: 16px;
-            border-radius: 6px;
-            overflow: auto;
-            margin: 1em 0;
-        }
-        .markdown-body code {
-            background-color: rgba(27,31,35,.05);
-            padding: .2em .4em;
-            border-radius: 3px;
-            font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-        }
-        .markdown-body h1, 
-        .markdown-body h2,
-        .markdown-body h3,
-        .markdown-body h4,
-        .markdown-body h5,
-        .markdown-body h6 {
-            margin: 1.5em 0 1em;
-            line-height: 1.25;
-        }
-        .markdown-body ul,
-        .markdown-body ol {
-            margin: 1em 0;
-            padding-left: 2em;
-        }
-        .markdown-body li {
-            margin: 0.5em 0;
-        }
-        .markdown-body blockquote {
-            margin: 1em 0;
-            padding: 0 1em;
-            color: #6a737d;
-            border-left: 0.25em solid #dfe2e5;
-        }
-        .markdown-body img {
-            max-width: 100%;
-            height: auto;
-        }
-        .markdown-body table {
-            border-spacing: 0;
-            border-collapse: collapse;
-            margin: 1em 0;
+        
+        /* 几何图形背景 */
+        .geometric-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            opacity: 0.4;
+            z-index: 0;
         }
-        .markdown-body table th,
-        .markdown-body table td {
-            padding: 6px 13px;
-            border: 1px solid #dfe2e5;
+        
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background-color: var(--secondary-blue);
+            opacity: 0.1;
         }
-        .markdown-body table tr {
-            background-color: #fff;
-            border-top: 1px solid #c6cbd1;
+        
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            right: -100px;
         }
-        .markdown-body table tr:nth-child(2n) {
-            background-color: #f6f8fa;
+        
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            bottom: 100px;
+            left: -50px;
+        }
+        
+        .triangle {
+            position: absolute;
+            width: 0;
+            height: 0;
+            opacity: 0.1;
+        }
+        
+        .triangle-1 {
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 180px solid var(--secondary-blue);
+            bottom: -50px;
+            right: 30%;
+        }
+        
+        /* 按钮 */
+        .btn {
+            padding: 0.8rem 2rem;
+            background: linear-gradient(to right, var(--primary-blue), var(--accent-blue));
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(30, 136, 229, 0.2);
+            text-decoration: none;
+            display: inline-block;
+            z-index: 1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(30, 136, 229, 0.3);
+        }
+        
+        /* 波浪分割线 */
+        .wave-divider {
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            margin-top: -100px;
+        }
+        
+        .wave-divider svg {
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 100px;
+            fill: var(--white);
+        }
+        
+        /* 内容区 */
+        .content-section {
+            background-color: var(--white);
+            padding: 4rem 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-blue), var(--accent-blue));
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* 卡片 - 渐变玻璃效果 */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-blue), var(--accent-blue));
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--accent-blue);
+            margin-bottom: 1.5rem;
+        }
+        
+        .card h3 {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+        
+        .card p {
+            color: var(--secondary-blue);
+            font-size: 1rem;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 3rem 5%;
+            text-align: center;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .social-icons a {
+            color: var(--white);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            transform: translateY(-5px) scale(1.1);
+            color: var(--light-blue);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+                font-size: 1.5rem;
+                color: var(--secondary-blue);
+                background: none;
+                border: none;
+                cursor: pointer;
+            }
+        }
+
+        /* 暗黑模式 */
+        body.dark-mode {
+            background-color: #0a192f;
+            color: #e6f1ff;
+        }
+        
+        body.dark-mode nav {
+            background-color: #112240;
+            box-shadow: 0 2px 10px rgba(2, 12, 27, 0.5);
+        }
+        
+        body.dark-mode .logo {
+            color: #e6f1ff;
+        }
+        
+        body.dark-mode .nav-links a {
+            color: #8892b0;
+        }
+        
+        body.dark-mode .nav-links a:hover {
+            color: #64ffda;
+        }
+        
+        body.dark-mode .hero h1 {
+            color: #e6f1ff;
+        }
+        
+        body.dark-mode .hero p {
+            color: #8892b0;
+        }
+        
+        body.dark-mode .content-section {
+            background-color: #112240;
+        }
+        
+        body.dark-mode .section-title h2 {
+            color: #e6f1ff;
+        }
+        
+        body.dark-mode .card {
+            background: rgba(17, 34, 64, 0.7);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+        
+        body.dark-mode .card h3 {
+            color: #e6f1ff;
+        }
+        
+        body.dark-mode .card p {
+            color: #8892b0;
+        }
+        
+        body.dark-mode .wave-divider svg {
+            fill: #112240;
+        }
+
+        /* 首字母装饰 */
+        .fancy-first-letter {
+            position: relative;
+        }
+
+        .fancy-first-letter::first-letter {
+            color: var(--accent-blue);
+            font-size: 1.5em;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="settings">
-            <h2>设置</h2>
-            <div>
-                <label for="model">AI模型：</label>
-                <select id="model">
-                    <option value="gpt-4o-mini">GPT-4o-mini</option>
-                    <option value="chatgpt-4o-latest">ChatGPT-4o-Latest</option>
-                    <option value="gpt-4o">GPT-4o</option>
-                    <option value="gpt-4o-lite">GPT-4o-Lite</option>
-                    <option value="o1-mini">O1-Mini</option>
-                    <option value="gpt-4o-2024-11-20">gpt-4o-2024-11-20</option>
-                </select>
-            </div>
-            <div>
-                <label for="apiKey">API Key：</label>
-                <input type="password" id="apiKey" placeholder="请输入您的API Key" onchange="fetchAvailableModels()">
-            </div>
-            <div>
-                <label for="baseUrl">Base URL：</label>
-                <input type="text" id="baseUrl" placeholder="请输入Base URL（可选）">
-            </div>
-            <div>
-                <label for="systemPrompt">System Prompt：</label>
-                <textarea id="systemPrompt" rows="3" placeholder="请输入System Prompt（可选）">你是一个友好的AI助手。</textarea>
-            </div>
-            <div>
-                <label for="maxTokens">最大Token数：</label>
-                <input type="number" id="maxTokens" value="2000" min="1" max="4000">
-            </div>
-            <div>
-                <label for="temperature">Temperature：</label>
-                <input type="range" id="temperature" min="0" max="2" step="0.1" value="0.7">
-                <span id="temperatureValue">0.7</span>
-            </div>
-            <div>
-                <label for="streamOutput">流式输出：</label>
-                <input type="checkbox" id="streamOutput" checked>
-            </div>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <!-- 导航栏 -->
+    <nav>
+        <div class="logo">YourName</div>
+        <div class="nav-links">
+            <a href="#home">首页</a>
+            <a href="#about">关于</a>
+            <a href="#projects">项目</a>
+            <a href="#contact">联系</a>
         </div>
-
-        <div class="chat-section">
-            <div class="chat-container" id="chatContainer">
-                <!-- 聊天消息将在这里显示 -->
-            </div>
-
-            <div class="input-container">
-                <textarea id="userInput" placeholder="请输入您的消息..." rows="3"></textarea>
-                <div class="button-container">
-                    <button onclick="sendMessage()" id="sendButton">发送</button>
-                    <button onclick="stopOutput()" id="stopButton" class="stop" style="display: none;">停止输出</button>
-                    <button onclick="saveChat()">保存聊天记录</button>
-                </div>
-            </div>
+        <button class="theme-toggle" id="theme-toggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </nav>
+    
+    <!-- 英雄区 -->
+    <section class="hero" id="home">
+        <!-- 几何图形背景 -->
+        <div class="geometric-bg">
+            <div class="circle circle-1 parallax-layer layer-1"></div>
+            <div class="circle circle-2 parallax-layer layer-2"></div>
+            <div class="triangle triangle-1 parallax-layer layer-3"></div>
         </div>
+        
+        <h1 class="animate fadeInDown">你好，我是 <span style="color: var(--accent-blue);">您的名字</span></h1>
+        <p class="animate fadeInUp">前端开发者 / 设计师 / 创意工作者</p>
+        <a href="#contact" class="btn animate fadeIn hover-float">联系我</a>
+    </section>
+    
+    <!-- 波浪分割线 -->
+    <div class="wave-divider">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+        </svg>
     </div>
-
-    <script>
-        let messages = [];
-        let currentController = null;
-        const md = window.markdownit({
-            breaks: true,  // 启用换行符转换
-            linkify: true, // 将URL转换为链接
-            typographer: true, // 启用一些语言中性的替换和引号美化
-            html: true     // 允许HTML标签
-        }).use(texmath, {
-            engine: katex,
-            delimiters: ['dollars', 'brackets'],  // 支持 $...$ 和 \[...\] 格式
-            katexOptions: {
-                macros: {'\\RR': '\\mathbb{R}'},
-                throwOnError: false,  // 不要因为解析错误而中断渲染
-                displayMode: true     // 默认使用显示模式
-            }
-        });
-
-        // 更新temperature显示值
-        document.getElementById('temperature').addEventListener('input', function(e) {
-            document.getElementById('temperatureValue').textContent = e.target.value;
-        });
-
-        // 获取可用模型列表
-        async function fetchAvailableModels() {
-            const apiKey = document.getElementById('apiKey').value;
-            if (!apiKey) return;
-
-            const baseUrl = document.getElementById('baseUrl').value || 'https://pro.aiskt.com/v1';
-            const modelSelect = document.getElementById('model');
-
-            try {
-                const response = await fetch(`${baseUrl}/models`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${apiKey}`
-                    }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    // 清空现有选项
-                    modelSelect.innerHTML = '';
-                    // 添加新的模型选项
-                    data.data.forEach(model => {
-                        const option = document.createElement('option');
-                        option.value = model.id;
-                        option.textContent = model.id;
-                        if (model.id === 'gpt-4o-mini') {
-                            option.selected = true;
-                        }
-                        modelSelect.appendChild(option);
-                    });
-                } else {
-                    console.error('获取模型列表失败');
-                }
-            } catch (error) {
-                console.error('获取模型列表出错:', error);
-            }
-        }
-
-        function stopOutput() {
-            if (currentController) {
-                currentController.abort();
-                currentController = null;
-                document.getElementById('stopButton').style.display = 'none';
-                document.getElementById('sendButton').style.display = 'block';
-            }
-        }
-
-        function sendMessage() {
-            const userInput = document.getElementById('userInput');
-            const chatContainer = document.getElementById('chatContainer');
-            const model = document.getElementById('model').value;
-            const apiKey = document.getElementById('apiKey').value;
-            const baseUrl = document.getElementById('baseUrl').value;
-            const systemPrompt = document.getElementById('systemPrompt').value;
-            const maxTokens = parseInt(document.getElementById('maxTokens').value);
-            const temperature = parseFloat(document.getElementById('temperature').value);
-
-            if (!userInput.value.trim()) return;
-            if (!apiKey) {
-                alert('请输入API Key');
-                return;
-            }
-
-            // 添加用户消息到界面
-            const userMessage = document.createElement('div');
-            userMessage.className = 'message user-message';
-            userMessage.textContent = userInput.value;
+    
+    <!-- 内容区 -->
+    <section class="content-section" id="about">
+        <div class="section-title">
+            <h2>关于我</h2>
+        </div>
+        
+        <div class="cards-container stagger-animate">
+            <div class="card shine-effect">
+                <div class="card-icon"><i class="fas fa-code"></i></div>
+                <h3>技能</h3>
+                <p class="fancy-first-letter">熟练掌握HTML、CSS、JavaScript等前端技术，以及React、Vue等现代框架。</p>
+            </div>
+            <div class="card shine-effect">
+                <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
+                <h3>教育</h3>
+                <p class="fancy-first-letter">计算机科学学士学位，优秀毕业生。对新技术保持持续学习的热情。</p>
+            </div>
+            <div class="card shine-effect">
+                <div class="card-icon"><i class="fas fa-heart"></i></div>
+                <h3>兴趣</h3>
+                <p class="fancy-first-letter">喜欢探索新技术，业余时间热爱摄影、旅行和户外活动。</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 项目展示区 -->
+    <section class="content-section" id="projects" style="background-color: var(--light-blue);">
+        <div class="section-title">
+            <h2>项目展示</h2>
+        </div>
+        
+        <div class="cards-container stagger-animate">
+            <div class="card gradient-border">
+                <div class="card-icon"><i class="fas fa-laptop-code"></i></div>
+                <h3>项目一</h3>
+                <p class="fancy-first-letter">这是一个使用React开发的响应式网站，具有现代UI设计和流畅的用户体验。</p>
+            </div>
+            <div class="card gradient-border">
+                <div class="card-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3>项目二</h3>
+                <p class="fancy-first-letter">一款移动应用，使用Flutter跨平台开发，获得了极高的用户评价。</p>
+            </div>
+            <div class="card gradient-border">
+                <div class="card-icon"><i class="fas fa-database"></i></div>
+                <h3>项目三</h3>
+                <p class="fancy-first-letter">数据可视化平台，结合后端API和前端图表库，展示复杂数据的直观界面。</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 联系区域 -->
+    <section class="content-section" id="contact">
+        <div class="section-title">
+            <h2>联系我</h2>
+        </div>
+        
+        <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+            <p style="color: var(--secondary-blue); margin-bottom: 2rem;" class="fancy-first-letter">
+                如果您对我的工作感兴趣，或者有任何问题，请随时联系我。我很乐意与您交流！
+            </p>
             
-            chatContainer.appendChild(userMessage);
-
-            // 构建消息对象
-            let messageContent = {
-                role: 'user',
-                content: userInput.value
-            };
-
-            sendRequest(messageContent);
-
-            // 清空输入
-            userInput.value = '';
-        }
-
-        function sendRequest(messageContent) {
-            // 如果是第一条消息，添加system prompt
-            if (messages.length === 0 && document.getElementById('systemPrompt').value) {
-                messages.push({
-                    role: 'system',
-                    content: document.getElementById('systemPrompt').value
-                });
-            }
-
-            messages.push(messageContent);
-
-            const model = document.getElementById('model').value;
-            const apiKey = document.getElementById('apiKey').value;
-            const baseUrl = document.getElementById('baseUrl').value;
-            const maxTokens = parseInt(document.getElementById('maxTokens').value);
-            const temperature = parseFloat(document.getElementById('temperature').value);
-            const streamOutput = document.getElementById('streamOutput').checked;
-
-            const endpoint = baseUrl || 'https://pro.aiskt.com/v1/chat/completions';
-
-            // 创建AI消息元素
-            const aiMessage = document.createElement('div');
-            aiMessage.className = 'message ai-message markdown-body';
-            chatContainer.appendChild(aiMessage);
-
-            if (streamOutput) {
-                // 显示停止按钮，隐藏发送按钮
-                document.getElementById('stopButton').style.display = 'block';
-                document.getElementById('sendButton').style.display = 'none';
-
-                // 创建新的 AbortController
-                currentController = new AbortController();
-                const signal = currentController.signal;
-
-                // 流式输出
-                fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiKey}`
+            <a href="mailto:your.email@example.com" class="btn hover-pulse">发送邮件</a>
+        </div>
+    </section>
+    
+    <!-- 页脚 -->
+    <footer>
+        <p>© 2023 您的名字. 保留所有权利.</p>
+        <div class="social-icons">
+            <a href="#" class="hover-float"><i class="fab fa-github"></i></a>
+            <a href="#" class="hover-float"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="hover-float"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="hover-float"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+    
+    <!-- 自定义光标 (默认不启用) -->
+    <div class="custom-cursor" style="display: none;"></div>
+    
+    <!-- JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script>
+        // 粒子背景配置
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 50,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: '#6c8eb3'
+                },
+                shape: {
+                    type: 'circle',
+                    stroke: {
+                        width: 0,
+                        color: '#000000'
+                    }
+                },
+                opacity: {
+                    value: 0.5,
+                    random: false,
+                    anim: {
+                        enable: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#6c8eb3',
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false,
+                    attract: {
+                        enable: false
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'grab'
                     },
-                    body: JSON.stringify({
-                        model: model,
-                        messages: messages,
-                        max_tokens: maxTokens,
-                        temperature: temperature,
-                        stream: true
-                    }),
-                    signal: signal
-                }).then(response => {
-                    const reader = response.body.getReader();
-                    let accumulatedResponse = '';
-
-                    function readStream() {
-                        return reader.read().then(({done, value}) => {
-                            if (done) {
-                                messages.push({
-                                    role: 'assistant',
-                                    content: accumulatedResponse
-                                });
-                                // 恢复按钮状态
-                                document.getElementById('stopButton').style.display = 'none';
-                                document.getElementById('sendButton').style.display = 'block';
-                                return;
-                            }
-
-                            const chunk = new TextDecoder().decode(value);
-                            const lines = chunk.split('\n');
-                            
-                            lines.forEach(line => {
-                                if (line.startsWith('data: ') && line !== 'data: [DONE]') {
-                                    try {
-                                        const data = JSON.parse(line.substring(6));
-                                        if (data.choices[0].delta.content) {
-                                            accumulatedResponse += data.choices[0].delta.content;
-                                            aiMessage.innerHTML = md.render(accumulatedResponse);
-                                            
-                                            // 处理代码块的显示
-                                            aiMessage.querySelectorAll('pre code').forEach(block => {
-                                                block.style.display = 'block';
-                                                block.style.whiteSpace = 'pre';
-                                            });
-                                            
-                                            chatContainer.scrollTop = chatContainer.scrollHeight;
-                                        }
-                                    } catch (e) {
-                                        console.error('Error parsing stream:', e);
-                                    }
-                                }
-                            });
-
-                            return readStream();
-                        });
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
                     }
+                }
+            },
+            retina_detect: true
+        });
 
-                    return readStream();
-                }).catch(error => {
-                    if (error.name === 'AbortError') {
-                        console.log('Stream aborted');
-                    } else {
-                        console.error('Error:', error);
-                        alert('发送消息失败，请检查您的设置和网络连接');
-                    }
-                    // 恢复按钮状态
-                    document.getElementById('stopButton').style.display = 'none';
-                    document.getElementById('sendButton').style.display = 'block';
-                });
+        // 暗黑模式切换
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const icon = this.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
             } else {
-                // 非流式输出
-                fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiKey}`
-                    },
-                    body: JSON.stringify({
-                        model: model,
-                        messages: messages,
-                        max_tokens: maxTokens,
-                        temperature: temperature
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    const aiResponse = data.choices[0].message.content;
-                    
-                    // 处理换行并使用markdown-it渲染内容
-                    const formattedResponse = aiResponse.replace(/\n/g, '  \n'); // 确保Markdown换行正确
-                    aiMessage.innerHTML = md.render(formattedResponse);
-                    
-                    // 处理代码块的显示
-                    aiMessage.querySelectorAll('pre code').forEach(block => {
-                        block.style.display = 'block';
-                        block.style.whiteSpace = 'pre';
-                    });
-
-                    // 添加AI回复到消息数组
-                    messages.push({
-                        role: 'assistant',
-                        content: aiResponse
-                    });
-
-                    // 滚动到底部
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('发送消息失败，请检查您的设置和网络连接');
-                });
-            }
-        }
-
-        // 添加回车发送功能
-        document.getElementById('userInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
             }
         });
 
-        // 保存聊天记录功能
-        function saveChat() {
-            if (messages.length === 0) {
-                alert('没有聊天记录可供保存');
-                return;
-            }
-
-            const chatContent = messages.map(msg => {
-                return `${msg.role}: ${msg.content}`;
-            }).join('\n\n');
-
-            const blob = new Blob([chatContent], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `聊天记录_${new Date().toLocaleString().replace(/[\/\s:]/g, '_')}.txt`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
+        // 英雄区视差效果
+        document.addEventListener('mousemove', function(e) {
+            const parallaxLayers = document.querySelectorAll('.parallax-layer');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            parallaxLayers.forEach(layer => {
+                const depth = layer.classList.contains('layer-1') ? 20 : 
+                              layer.classList.contains('layer-2') ? 40 : 60;
+                const moveX = (x * depth);
+                const moveY = (y * depth);
+                
+                layer.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+        });
+        
+        // 启用自定义光标（默认关闭，取消下面注释可开启）
+        /*
+        document.addEventListener('DOMContentLoaded', function() {
+            const cursor = document.querySelector('.custom-cursor');
+            cursor.style.display = 'block';
+            document.body.classList.add('custom-cursor-enabled');
+            
+            document.addEventListener('mousemove', function(e) {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            
+            document.addEventListener('mousedown', function() {
+                cursor.classList.add('cursor-clicked');
+            });
+            
+            document.addEventListener('mouseup', function() {
+                cursor.classList.remove('cursor-clicked');
+            });
+            
+            // 链接和按钮悬停效果
+            const links = document.querySelectorAll('a, button');
+            links.forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    cursor.classList.add('cursor-hover');
+                });
+                link.addEventListener('mouseleave', function() {
+                    cursor.classList.remove('cursor-hover');
+                });
+            });
+        });
+        */
     </script>
 </body>
 </html>

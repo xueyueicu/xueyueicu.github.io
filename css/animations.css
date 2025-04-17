@@ -1,0 +1,233 @@
+/* 
+   动画效果样式文件 - 蓝白主题
+   包含各类动画和微交互效果
+*/
+
+/* 淡入动画 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* 上移淡入 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 下移淡入 */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 缩放淡入 */
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 脉冲动画 */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* 悬浮脉冲 */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* 光芒扫过效果 */
+@keyframes shine {
+    0% {
+        background-position: -100% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* 波纹效果 */
+@keyframes ripple {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* 应用动画的类 */
+.animate {
+    animation-duration: 0.8s;
+    animation-fill-mode: both;
+}
+
+.animate.fadeIn {
+    animation-name: fadeIn;
+}
+
+.animate.fadeInUp {
+    animation-name: fadeInUp;
+}
+
+.animate.fadeInDown {
+    animation-name: fadeInDown;
+}
+
+.animate.zoomIn {
+    animation-name: zoomIn;
+}
+
+/* 交错动画 - 用于列表或卡片组 */
+.stagger-animate > * {
+    opacity: 0;
+}
+
+.stagger-animate > *.animate {
+    animation-name: fadeInUp;
+}
+
+.stagger-animate > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-animate > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-animate > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-animate > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-animate > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-animate > *:nth-child(6) { animation-delay: 0.6s; }
+
+/* 悬浮动画效果 */
+.hover-float:hover {
+    animation: float 2s ease-in-out infinite;
+}
+
+.hover-pulse:hover {
+    animation: pulse 1s ease-in-out infinite;
+}
+
+/* 按钮点击波纹效果 */
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+
+.btn:active::after {
+    animation: ripple 0.6s ease-out;
+}
+
+/* 卡片闪光效果 */
+.card.shine-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.card.shine-effect::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent 10%,
+        rgba(255, 255, 255, 0.5) 50%,
+        transparent 90%
+    );
+    background-size: 200% 100%;
+    animation: none;
+}
+
+.card.shine-effect:hover::before {
+    animation: shine 1.5s infinite;
+}
+
+/* 英雄区层次动画 */
+.parallax-layer {
+    transform: translateZ(0);
+    transition: transform 0.3s ease-out;
+}
+
+.parallax-layer.layer-1 { transform: translateZ(-10px); }
+.parallax-layer.layer-2 { transform: translateZ(-20px); }
+.parallax-layer.layer-3 { transform: translateZ(-30px); }
+
+/* 渐变边框动画 */
+.gradient-border {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.gradient-border::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    z-index: -1;
+    background: linear-gradient(45deg, 
+        var(--primary-blue), 
+        var(--accent-blue), 
+        var(--secondary-blue), 
+        var(--primary-blue));
+    background-size: 400% 400%;
+    animation: gradient-animation 3s ease infinite;
+    border-radius: 12px;
+}
+
+@keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+} 

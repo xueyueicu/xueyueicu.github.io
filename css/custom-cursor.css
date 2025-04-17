@@ -1,0 +1,65 @@
+/* 
+   自定义光标样式文件 - 蓝白主题
+   提供可选的自定义光标效果
+*/
+
+/* 隐藏默认光标 */
+body.custom-cursor-enabled {
+    cursor: none;
+}
+
+/* 基础光标样式 */
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(30, 136, 229, 0.6);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+    mix-blend-mode: difference;
+}
+
+/* 悬停状态 */
+.custom-cursor.cursor-hover {
+    width: 24px;
+    height: 24px;
+    background-color: rgba(13, 59, 102, 0.3);
+    border: 2px solid rgba(30, 136, 229, 0.8);
+    mix-blend-mode: normal;
+}
+
+/* 点击状态 */
+.custom-cursor.cursor-clicked {
+    transform: translate(-50%, -50%) scale(0.8);
+    background-color: rgba(30, 136, 229, 0.9);
+}
+
+/* 暗黑模式下的光标样式 */
+body.dark-mode .custom-cursor {
+    background-color: rgba(100, 255, 218, 0.6);
+}
+
+body.dark-mode .custom-cursor.cursor-hover {
+    background-color: rgba(100, 255, 218, 0.3);
+    border: 2px solid rgba(100, 255, 218, 0.8);
+}
+
+body.dark-mode .custom-cursor.cursor-clicked {
+    background-color: rgba(100, 255, 218, 0.9);
+}
+
+/* 文本选择增强效果 */
+body.custom-cursor-enabled ::selection {
+    background-color: rgba(30, 136, 229, 0.2);
+    color: inherit;
+}
+
+body.dark-mode.custom-cursor-enabled ::selection {
+    background-color: rgba(100, 255, 218, 0.2);
+    color: inherit;
+} 

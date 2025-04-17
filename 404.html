@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - 页面未找到</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #0d3b66;
+            --secondary-blue: #6c8eb3;
+            --light-blue: #e6f2ff;
+            --accent-blue: #1e88e5;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--light-blue);
+            color: var(--primary-blue);
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        /* 404页面主要内容 */
+        .error-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        /* 冰山插图 - 使用CSS创建简单冰山 */
+        .iceberg {
+            position: relative;
+            width: 250px;
+            height: 300px;
+            margin-bottom: 2rem;
+        }
+        
+        .iceberg-top {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 120px;
+            background: var(--white);
+            border-radius: 50% 50% 0 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+        }
+        
+        .iceberg-bottom {
+            position: absolute;
+            top: 100px;
+            left: 0;
+            width: 250px;
+            height: 200px;
+            background: linear-gradient(to bottom, rgba(108, 142, 179, 0.5), rgba(30, 136, 229, 0.7));
+            clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+            border-radius: 0 0 30px 30px;
+            opacity: 0.7;
+            z-index: 1;
+        }
+        
+        /* 波浪动画 */
+        .waves {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%236c8eb3" fill-opacity="0.4" d="M0,64L48,80C96,96,192,128,288,138.7C384,149,480,139,576,122.7C672,107,768,85,864,90.7C960,96,1056,128,1152,133.3C1248,139,1344,117,1392,106.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            animation: wave 10s linear infinite;
+            opacity: 0.5;
+        }
+        
+        .waves2 {
+            position: absolute;
+            bottom: -30px;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%231e88e5" fill-opacity="0.3" d="M0,128L48,133.3C96,139,192,149,288,138.7C384,128,480,96,576,85.3C672,75,768,85,864,112C960,139,1056,181,1152,170.7C1248,160,1344,96,1392,64L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            animation: wave 7s linear infinite;
+            opacity: 0.6;
+        }
+        
+        @keyframes wave {
+            0% {
+                background-position-x: 0;
+            }
+            100% {
+                background-position-x: 1440px;
+            }
+        }
+        
+        /* 404文本样式 */
+        .error-code {
+            font-size: 7rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+        
+        .error-text {
+            font-size: 1.5rem;
+            color: var(--secondary-blue);
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+        
+        /* 按钮 */
+        .btn {
+            padding: 0.8rem 2rem;
+            background: linear-gradient(to right, var(--primary-blue), var(--accent-blue));
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(30, 136, 229, 0.2);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(30, 136, 229, 0.3);
+        }
+        
+        /* 鲸鱼动画 */
+        .whale {
+            position: absolute;
+            bottom: 50px;
+            right: -100px;
+            width: 80px;
+            height: 40px;
+            background-color: var(--primary-blue);
+            border-radius: 40px 40px 0 0;
+            animation: swim 15s linear infinite;
+            z-index: 3;
+        }
+        
+        .whale::before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            right: 15px;
+            width: 8px;
+            height: 8px;
+            background-color: var(--white);
+            border-radius: 50%;
+        }
+        
+        .whale::after {
+            content: "";
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            width: 15px;
+            height: 15px;
+            background-color: var(--primary-blue);
+            border-radius: 50%;
+            transform: rotate(45deg);
+        }
+        
+        .tail {
+            position: absolute;
+            bottom: 10px;
+            right: -20px;
+            width: 20px;
+            height: 25px;
+            background-color: var(--primary-blue);
+            border-radius: 0 0 50% 50%;
+            transform: rotate(-30deg);
+        }
+        
+        @keyframes swim {
+            0% {
+                transform: translateX(calc(100vw + 100px));
+            }
+            100% {
+                transform: translateX(-150px);
+            }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 5rem;
+            }
+            
+            .error-text {
+                font-size: 1.2rem;
+            }
+            
+            .iceberg {
+                transform: scale(0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <!-- 冰山插图 -->
+        <div class="iceberg">
+            <div class="iceberg-top"></div>
+            <div class="iceberg-bottom"></div>
+        </div>
+        
+        <!-- 鲸鱼动画 -->
+        <div class="whale">
+            <div class="tail"></div>
+        </div>
+        
+        <!-- 波浪动画 -->
+        <div class="waves"></div>
+        <div class="waves2"></div>
+        
+        <!-- 错误信息 -->
+        <h1 class="error-code">404</h1>
+        <p class="error-text">哎呀！你似乎漂流到了未知的海域。这个页面可能已经融化，或者从未存在过。</p>
+        
+        <!-- 返回首页按钮 -->
+        <a href="index.html" class="btn">返回首页</a>
+    </div>
+</body>
+</html> 

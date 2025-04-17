@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>个人网站 - 蓝白主题</title>
+    <title>Personal Website - Blue & White Theme</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/animations.css">
@@ -411,6 +411,27 @@
             font-size: 1.5em;
             font-weight: bold;
         }
+
+        /* 语言切换按钮 */
+        .lang-toggle {
+            background: none;
+            border: none;
+            color: var(--secondary-blue);
+            font-size: 1rem;
+            cursor: pointer;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .lang-toggle:hover {
+            color: var(--primary-blue);
+        }
+        
+        /* 工具栏容器 */
+        .toolbar {
+            display: flex;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -421,14 +442,17 @@
     <nav>
         <div class="logo">YourName</div>
         <div class="nav-links">
-            <a href="#home">首页</a>
-            <a href="#about">关于</a>
-            <a href="#projects">项目</a>
-            <a href="#contact">联系</a>
+            <a href="#home" data-i18n="nav.home">Home</a>
+            <a href="#about" data-i18n="nav.about">About</a>
+            <a href="#projects" data-i18n="nav.projects">Projects</a>
+            <a href="#contact" data-i18n="nav.contact">Contact</a>
         </div>
-        <button class="theme-toggle" id="theme-toggle">
-            <i class="fas fa-moon"></i>
-        </button>
+        <div class="toolbar">
+            <button class="lang-toggle" id="lang-toggle">中文</button>
+            <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
     </nav>
     
     <!-- 英雄区 -->
@@ -440,9 +464,9 @@
             <div class="triangle triangle-1 parallax-layer layer-3"></div>
         </div>
         
-        <h1 class="animate fadeInDown">你好，我是 <span style="color: var(--accent-blue);">您的名字</span></h1>
-        <p class="animate fadeInUp">前端开发者 / 设计师 / 创意工作者</p>
-        <a href="#contact" class="btn animate fadeIn hover-float">联系我</a>
+        <h1 class="animate fadeInDown"><span data-i18n="hero.greeting">Hello, I'm </span><span style="color: var(--accent-blue);" data-i18n="hero.name">Your Name</span></h1>
+        <p class="animate fadeInUp" data-i18n="hero.role">Frontend Developer / Designer / Creative Worker</p>
+        <a href="#contact" class="btn animate fadeIn hover-float" data-i18n="hero.contact">Contact Me</a>
     </section>
     
     <!-- 波浪分割线 -->
@@ -455,49 +479,49 @@
     <!-- 内容区 -->
     <section class="content-section" id="about">
         <div class="section-title">
-            <h2>关于我</h2>
+            <h2 data-i18n="about.title">About Me</h2>
         </div>
         
         <div class="cards-container stagger-animate">
             <div class="card shine-effect">
                 <div class="card-icon"><i class="fas fa-code"></i></div>
-                <h3>技能</h3>
-                <p class="fancy-first-letter">熟练掌握HTML、CSS、JavaScript等前端技术，以及React、Vue等现代框架。</p>
+                <h3 data-i18n="about.skills.title">Skills</h3>
+                <p class="fancy-first-letter" data-i18n="about.skills.content">Proficient in HTML, CSS, JavaScript and modern frameworks like React and Vue.</p>
             </div>
             <div class="card shine-effect">
                 <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
-                <h3>教育</h3>
-                <p class="fancy-first-letter">计算机科学学士学位，优秀毕业生。对新技术保持持续学习的热情。</p>
+                <h3 data-i18n="about.education.title">Education</h3>
+                <p class="fancy-first-letter" data-i18n="about.education.content">Bachelor's degree in Computer Science with honors. Passionate about continuous learning.</p>
             </div>
             <div class="card shine-effect">
                 <div class="card-icon"><i class="fas fa-heart"></i></div>
-                <h3>兴趣</h3>
-                <p class="fancy-first-letter">喜欢探索新技术，业余时间热爱摄影、旅行和户外活动。</p>
+                <h3 data-i18n="about.interests.title">Interests</h3>
+                <p class="fancy-first-letter" data-i18n="about.interests.content">Love exploring new technologies and enjoy photography, travel, and outdoor activities.</p>
             </div>
         </div>
     </section>
     
     <!-- 项目展示区 -->
-    <section class="content-section" id="projects" style="background-color: var(--light-blue);">
+    <section class="content-section projects-section" id="projects">
         <div class="section-title">
-            <h2>项目展示</h2>
+            <h2 data-i18n="projects.title">Projects</h2>
         </div>
         
         <div class="cards-container stagger-animate">
             <div class="card gradient-border">
                 <div class="card-icon"><i class="fas fa-laptop-code"></i></div>
-                <h3>项目一</h3>
-                <p class="fancy-first-letter">这是一个使用React开发的响应式网站，具有现代UI设计和流畅的用户体验。</p>
+                <h3 data-i18n="projects.project1.title">Project One</h3>
+                <p class="fancy-first-letter" data-i18n="projects.project1.content">A responsive website developed with React, featuring modern UI design and smooth user experience.</p>
             </div>
             <div class="card gradient-border">
                 <div class="card-icon"><i class="fas fa-mobile-alt"></i></div>
-                <h3>项目二</h3>
-                <p class="fancy-first-letter">一款移动应用，使用Flutter跨平台开发，获得了极高的用户评价。</p>
+                <h3 data-i18n="projects.project2.title">Project Two</h3>
+                <p class="fancy-first-letter" data-i18n="projects.project2.content">A mobile application developed with Flutter cross-platform framework, receiving high user ratings.</p>
             </div>
             <div class="card gradient-border">
                 <div class="card-icon"><i class="fas fa-database"></i></div>
-                <h3>项目三</h3>
-                <p class="fancy-first-letter">数据可视化平台，结合后端API和前端图表库，展示复杂数据的直观界面。</p>
+                <h3 data-i18n="projects.project3.title">Project Three</h3>
+                <p class="fancy-first-letter" data-i18n="projects.project3.content">Data visualization platform combining backend APIs with frontend chart libraries for intuitive data display.</p>
             </div>
         </div>
     </section>
@@ -505,21 +529,21 @@
     <!-- 联系区域 -->
     <section class="content-section" id="contact">
         <div class="section-title">
-            <h2>联系我</h2>
+            <h2 data-i18n="contact.title">Contact Me</h2>
         </div>
         
         <div style="text-align: center; max-width: 600px; margin: 0 auto;">
-            <p style="color: var(--secondary-blue); margin-bottom: 2rem;" class="fancy-first-letter">
-                如果您对我的工作感兴趣，或者有任何问题，请随时联系我。我很乐意与您交流！
+            <p style="color: var(--secondary-blue); margin-bottom: 2rem;" class="fancy-first-letter" data-i18n="contact.content">
+                If you're interested in my work or have any questions, please feel free to contact me. I'd be happy to connect!
             </p>
             
-            <a href="mailto:your.email@example.com" class="btn hover-pulse">发送邮件</a>
+            <a href="mailto:your.email@example.com" class="btn hover-pulse" data-i18n="contact.button">Send Email</a>
         </div>
     </section>
     
     <!-- 页脚 -->
     <footer>
-        <p>© 2023 您的名字. 保留所有权利.</p>
+        <p data-i18n="footer.copyright">© 2023 Your Name. All rights reserved.</p>
         <div class="social-icons">
             <a href="#" class="hover-float"><i class="fab fa-github"></i></a>
             <a href="#" class="hover-float"><i class="fab fa-linkedin"></i></a>
@@ -534,6 +558,7 @@
     <!-- JavaScript 文件 -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="js/scripts.js"></script>
+    <script src="js/i18n.js"></script>
     <script>
         // 粒子背景配置
         particlesJS('particles-js', {
@@ -615,19 +640,6 @@
                 }
             },
             retina_detect: true
-        });
-
-        // 暗黑模式切换
-        document.getElementById('theme-toggle').addEventListener('click', function() {
-            document.body.classList.toggle('dark-mode');
-            const icon = this.querySelector('i');
-            if (document.body.classList.contains('dark-mode')) {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-            } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-            }
         });
 
         // 英雄区视差效果

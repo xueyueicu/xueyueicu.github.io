@@ -132,6 +132,25 @@ nav {
     padding: 4rem 5%;
 }
 
+/* 项目展示区特殊样式 */
+.projects-section {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), var(--white));
+    position: relative;
+}
+
+.projects-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(var(--secondary-blue) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.05;
+    pointer-events: none;
+}
+
 .section-title {
     text-align: center;
     margin-bottom: 3rem;
@@ -298,6 +317,15 @@ body.dark-mode .card h3 {
 
 body.dark-mode .card p {
     color: #8892b0;
+}
+
+body.dark-mode .projects-section {
+    background: linear-gradient(to bottom, rgba(17, 34, 64, 0.9), #112240);
+}
+
+body.dark-mode .projects-section::before {
+    background-image: radial-gradient(#64ffda 1px, transparent 1px);
+    opacity: 0.03;
 }
 
 body.dark-mode .wave-divider svg {
